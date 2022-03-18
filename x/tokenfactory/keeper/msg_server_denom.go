@@ -17,9 +17,8 @@ func (k msgServer) CreateDenom(goCtx context.Context, msg *types.MsgCreateDenom)
 		msg.Denom,
 	)
 	if isFound {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "index already set")
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "Denom already exists")
 	}
-
 	var denom = types.Denom{
 		Owner:              msg.Owner,
 		Denom:              msg.Denom,
@@ -28,7 +27,7 @@ func (k msgServer) CreateDenom(goCtx context.Context, msg *types.MsgCreateDenom)
 		Precision:          msg.Precision,
 		Url:                msg.Url,
 		MaxSupply:          msg.MaxSupply,
-		Supply:             msg.Supply,
+		Supply:             0,
 		CanChangeMaxSupply: msg.CanChangeMaxSupply,
 	}
 
@@ -56,15 +55,21 @@ func (k msgServer) UpdateDenom(goCtx context.Context, msg *types.MsgUpdateDenom)
 		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "incorrect owner")
 	}
 
+	if !valFound.CanChangeMaxSupply && valFound.MaxSupply != msg.MaxSupply {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "cannot change maxsupply")
+	}
+	if !valFound.CanChangeMaxSupply && msg.CanChangeMaxSupply {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "Cannot revert change maxsupply flag")
+	}
 	var denom = types.Denom{
 		Owner:              msg.Owner,
 		Denom:              msg.Denom,
 		Description:        msg.Description,
-		Ticker:             msg.Ticker,
-		Precision:          msg.Precision,
+		Ticker:             valFound.Ticker,
+		Precision:          valFound.Precision,
 		Url:                msg.Url,
 		MaxSupply:          msg.MaxSupply,
-		Supply:             msg.Supply,
+		Supply:             valFound.Supply,
 		CanChangeMaxSupply: msg.CanChangeMaxSupply,
 	}
 
