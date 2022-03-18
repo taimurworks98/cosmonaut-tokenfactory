@@ -32,10 +32,6 @@ const (
 	// TODO: Determine the simulation weight value
 	defaultWeightMsgUpdateDenom int = 100
 
-	opWeightMsgDeleteDenom = "op_weight_msg_create_chain"
-	// TODO: Determine the simulation weight value
-	defaultWeightMsgDeleteDenom int = 100
-
 	// this line is used by starport scaffolding # simapp/module/const
 )
 
@@ -99,17 +95,6 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 	operations = append(operations, simulation.NewWeightedOperation(
 		weightMsgUpdateDenom,
 		tokenfactorysimulation.SimulateMsgUpdateDenom(am.accountKeeper, am.bankKeeper, am.keeper),
-	))
-
-	var weightMsgDeleteDenom int
-	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgDeleteDenom, &weightMsgDeleteDenom, nil,
-		func(_ *rand.Rand) {
-			weightMsgDeleteDenom = defaultWeightMsgDeleteDenom
-		},
-	)
-	operations = append(operations, simulation.NewWeightedOperation(
-		weightMsgDeleteDenom,
-		tokenfactorysimulation.SimulateMsgDeleteDenom(am.accountKeeper, am.bankKeeper, am.keeper),
 	))
 
 	// this line is used by starport scaffolding # simapp/module/operation
