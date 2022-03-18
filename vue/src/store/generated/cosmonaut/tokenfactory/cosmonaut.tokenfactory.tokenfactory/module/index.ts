@@ -4,15 +4,17 @@ import { StdFee } from "@cosmjs/launchpad";
 import { SigningStargateClient } from "@cosmjs/stargate";
 import { Registry, OfflineSigner, EncodeObject, DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 import { Api } from "./rest";
-import { MsgCreateDenom } from "./types/tokenfactory/tx";
 import { MsgUpdateDenom } from "./types/tokenfactory/tx";
-import { MsgDeleteDenom } from "./types/tokenfactory/tx";
+import { MsgCreateDenom } from "./types/tokenfactory/tx";
+import { MsgMintAndSendTokens } from "./types/tokenfactory/tx";
+import { MsgUpdateOwner } from "./types/tokenfactory/tx";
 
 
 const types = [
-  ["/cosmonaut.tokenfactory.tokenfactory.MsgCreateDenom", MsgCreateDenom],
   ["/cosmonaut.tokenfactory.tokenfactory.MsgUpdateDenom", MsgUpdateDenom],
-  ["/cosmonaut.tokenfactory.tokenfactory.MsgDeleteDenom", MsgDeleteDenom],
+  ["/cosmonaut.tokenfactory.tokenfactory.MsgCreateDenom", MsgCreateDenom],
+  ["/cosmonaut.tokenfactory.tokenfactory.MsgMintAndSendTokens", MsgMintAndSendTokens],
+  ["/cosmonaut.tokenfactory.tokenfactory.MsgUpdateOwner", MsgUpdateOwner],
   
 ];
 export const MissingWalletError = new Error("wallet is required");
@@ -45,9 +47,10 @@ const txClient = async (wallet: OfflineSigner, { addr: addr }: TxClientOptions =
 
   return {
     signAndBroadcast: (msgs: EncodeObject[], { fee, memo }: SignAndBroadcastOptions = {fee: defaultFee, memo: ""}) => client.signAndBroadcast(address, msgs, fee,memo),
-    msgCreateDenom: (data: MsgCreateDenom): EncodeObject => ({ typeUrl: "/cosmonaut.tokenfactory.tokenfactory.MsgCreateDenom", value: MsgCreateDenom.fromPartial( data ) }),
     msgUpdateDenom: (data: MsgUpdateDenom): EncodeObject => ({ typeUrl: "/cosmonaut.tokenfactory.tokenfactory.MsgUpdateDenom", value: MsgUpdateDenom.fromPartial( data ) }),
-    msgDeleteDenom: (data: MsgDeleteDenom): EncodeObject => ({ typeUrl: "/cosmonaut.tokenfactory.tokenfactory.MsgDeleteDenom", value: MsgDeleteDenom.fromPartial( data ) }),
+    msgCreateDenom: (data: MsgCreateDenom): EncodeObject => ({ typeUrl: "/cosmonaut.tokenfactory.tokenfactory.MsgCreateDenom", value: MsgCreateDenom.fromPartial( data ) }),
+    msgMintAndSendTokens: (data: MsgMintAndSendTokens): EncodeObject => ({ typeUrl: "/cosmonaut.tokenfactory.tokenfactory.MsgMintAndSendTokens", value: MsgMintAndSendTokens.fromPartial( data ) }),
+    msgUpdateOwner: (data: MsgUpdateOwner): EncodeObject => ({ typeUrl: "/cosmonaut.tokenfactory.tokenfactory.MsgUpdateOwner", value: MsgUpdateOwner.fromPartial( data ) }),
     
   };
 };

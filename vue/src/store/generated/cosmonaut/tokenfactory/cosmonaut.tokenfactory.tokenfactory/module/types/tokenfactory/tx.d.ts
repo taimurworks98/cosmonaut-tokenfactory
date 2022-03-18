@@ -8,7 +8,6 @@ export interface MsgCreateDenom {
     precision: number;
     url: string;
     maxSupply: number;
-    supply: number;
     canChangeMaxSupply: boolean;
 }
 export interface MsgCreateDenomResponse {
@@ -17,20 +16,26 @@ export interface MsgUpdateDenom {
     owner: string;
     denom: string;
     description: string;
-    ticker: string;
-    precision: number;
     url: string;
     maxSupply: number;
-    supply: number;
     canChangeMaxSupply: boolean;
 }
 export interface MsgUpdateDenomResponse {
 }
-export interface MsgDeleteDenom {
+export interface MsgMintAndSendTokens {
     owner: string;
     denom: string;
+    amount: number;
+    recipient: string;
 }
-export interface MsgDeleteDenomResponse {
+export interface MsgMintAndSendTokensResponse {
+}
+export interface MsgUpdateOwner {
+    owner: string;
+    denom: string;
+    newOwner: string;
+}
+export interface MsgUpdateOwnerResponse {
 }
 export declare const MsgCreateDenom: {
     encode(message: MsgCreateDenom, writer?: Writer): Writer;
@@ -60,33 +65,49 @@ export declare const MsgUpdateDenomResponse: {
     toJSON(_: MsgUpdateDenomResponse): unknown;
     fromPartial(_: DeepPartial<MsgUpdateDenomResponse>): MsgUpdateDenomResponse;
 };
-export declare const MsgDeleteDenom: {
-    encode(message: MsgDeleteDenom, writer?: Writer): Writer;
-    decode(input: Reader | Uint8Array, length?: number): MsgDeleteDenom;
-    fromJSON(object: any): MsgDeleteDenom;
-    toJSON(message: MsgDeleteDenom): unknown;
-    fromPartial(object: DeepPartial<MsgDeleteDenom>): MsgDeleteDenom;
+export declare const MsgMintAndSendTokens: {
+    encode(message: MsgMintAndSendTokens, writer?: Writer): Writer;
+    decode(input: Reader | Uint8Array, length?: number): MsgMintAndSendTokens;
+    fromJSON(object: any): MsgMintAndSendTokens;
+    toJSON(message: MsgMintAndSendTokens): unknown;
+    fromPartial(object: DeepPartial<MsgMintAndSendTokens>): MsgMintAndSendTokens;
 };
-export declare const MsgDeleteDenomResponse: {
-    encode(_: MsgDeleteDenomResponse, writer?: Writer): Writer;
-    decode(input: Reader | Uint8Array, length?: number): MsgDeleteDenomResponse;
-    fromJSON(_: any): MsgDeleteDenomResponse;
-    toJSON(_: MsgDeleteDenomResponse): unknown;
-    fromPartial(_: DeepPartial<MsgDeleteDenomResponse>): MsgDeleteDenomResponse;
+export declare const MsgMintAndSendTokensResponse: {
+    encode(_: MsgMintAndSendTokensResponse, writer?: Writer): Writer;
+    decode(input: Reader | Uint8Array, length?: number): MsgMintAndSendTokensResponse;
+    fromJSON(_: any): MsgMintAndSendTokensResponse;
+    toJSON(_: MsgMintAndSendTokensResponse): unknown;
+    fromPartial(_: DeepPartial<MsgMintAndSendTokensResponse>): MsgMintAndSendTokensResponse;
+};
+export declare const MsgUpdateOwner: {
+    encode(message: MsgUpdateOwner, writer?: Writer): Writer;
+    decode(input: Reader | Uint8Array, length?: number): MsgUpdateOwner;
+    fromJSON(object: any): MsgUpdateOwner;
+    toJSON(message: MsgUpdateOwner): unknown;
+    fromPartial(object: DeepPartial<MsgUpdateOwner>): MsgUpdateOwner;
+};
+export declare const MsgUpdateOwnerResponse: {
+    encode(_: MsgUpdateOwnerResponse, writer?: Writer): Writer;
+    decode(input: Reader | Uint8Array, length?: number): MsgUpdateOwnerResponse;
+    fromJSON(_: any): MsgUpdateOwnerResponse;
+    toJSON(_: MsgUpdateOwnerResponse): unknown;
+    fromPartial(_: DeepPartial<MsgUpdateOwnerResponse>): MsgUpdateOwnerResponse;
 };
 /** Msg defines the Msg service. */
 export interface Msg {
     CreateDenom(request: MsgCreateDenom): Promise<MsgCreateDenomResponse>;
     UpdateDenom(request: MsgUpdateDenom): Promise<MsgUpdateDenomResponse>;
+    MintAndSendTokens(request: MsgMintAndSendTokens): Promise<MsgMintAndSendTokensResponse>;
     /** this line is used by starport scaffolding # proto/tx/rpc */
-    DeleteDenom(request: MsgDeleteDenom): Promise<MsgDeleteDenomResponse>;
+    UpdateOwner(request: MsgUpdateOwner): Promise<MsgUpdateOwnerResponse>;
 }
 export declare class MsgClientImpl implements Msg {
     private readonly rpc;
     constructor(rpc: Rpc);
     CreateDenom(request: MsgCreateDenom): Promise<MsgCreateDenomResponse>;
     UpdateDenom(request: MsgUpdateDenom): Promise<MsgUpdateDenomResponse>;
-    DeleteDenom(request: MsgDeleteDenom): Promise<MsgDeleteDenomResponse>;
+    MintAndSendTokens(request: MsgMintAndSendTokens): Promise<MsgMintAndSendTokensResponse>;
+    UpdateOwner(request: MsgUpdateOwner): Promise<MsgUpdateOwnerResponse>;
 }
 interface Rpc {
     request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;

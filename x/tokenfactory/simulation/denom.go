@@ -48,7 +48,7 @@ func SimulateMsgCreateDenom(
 			ModuleName:      types.ModuleName,
 			CoinsSpentInMsg: sdk.NewCoins(),
 			AccountKeeper:   ak,
-			Bankkeeper:      bk,
+			// Bankkeeper:      bk,
 		}
 		return simulation.GenAndDeliverTxWithRandFees(txCtx)
 	}
@@ -94,7 +94,7 @@ func SimulateMsgUpdateDenom(
 			ModuleName:      types.ModuleName,
 			CoinsSpentInMsg: sdk.NewCoins(),
 			AccountKeeper:   ak,
-			Bankkeeper:      bk,
+			// Bankkeeper:      bk,
 		}
 		return simulation.GenAndDeliverTxWithRandFees(txCtx)
 	}

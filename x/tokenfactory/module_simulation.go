@@ -32,6 +32,14 @@ const (
 	// TODO: Determine the simulation weight value
 	defaultWeightMsgUpdateDenom int = 100
 
+	opWeightMsgMintAndSendTokens = "op_weight_msg_create_chain"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgMintAndSendTokens int = 100
+
+	opWeightMsgUpdateOwner = "op_weight_msg_create_chain"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgUpdateOwner int = 100
+
 	// this line is used by starport scaffolding # simapp/module/const
 )
 
@@ -95,6 +103,28 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 	operations = append(operations, simulation.NewWeightedOperation(
 		weightMsgUpdateDenom,
 		tokenfactorysimulation.SimulateMsgUpdateDenom(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgMintAndSendTokens int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgMintAndSendTokens, &weightMsgMintAndSendTokens, nil,
+		func(_ *rand.Rand) {
+			weightMsgMintAndSendTokens = defaultWeightMsgMintAndSendTokens
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgMintAndSendTokens,
+		tokenfactorysimulation.SimulateMsgMintAndSendTokens(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgUpdateOwner int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgUpdateOwner, &weightMsgUpdateOwner, nil,
+		func(_ *rand.Rand) {
+			weightMsgUpdateOwner = defaultWeightMsgUpdateOwner
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgUpdateOwner,
+		tokenfactorysimulation.SimulateMsgUpdateOwner(am.accountKeeper, am.bankKeeper, am.keeper),
 	))
 
 	// this line is used by starport scaffolding # simapp/module/operation

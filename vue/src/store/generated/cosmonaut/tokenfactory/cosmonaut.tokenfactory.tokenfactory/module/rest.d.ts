@@ -22,8 +22,9 @@ export interface TokenfactoryDenom {
     owner?: string;
 }
 export declare type TokenfactoryMsgCreateDenomResponse = object;
-export declare type TokenfactoryMsgDeleteDenomResponse = object;
+export declare type TokenfactoryMsgMintAndSendTokensResponse = object;
 export declare type TokenfactoryMsgUpdateDenomResponse = object;
+export declare type TokenfactoryMsgUpdateOwnerResponse = object;
 /**
  * Params defines the parameters for the module.
  */

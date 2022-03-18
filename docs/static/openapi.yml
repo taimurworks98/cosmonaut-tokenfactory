@@ -12836,9 +12836,11 @@ definitions:
         type: string
   cosmonaut.tokenfactory.tokenfactory.MsgCreateDenomResponse:
     type: object
-  cosmonaut.tokenfactory.tokenfactory.MsgDeleteDenomResponse:
+  cosmonaut.tokenfactory.tokenfactory.MsgMintAndSendTokensResponse:
     type: object
   cosmonaut.tokenfactory.tokenfactory.MsgUpdateDenomResponse:
+    type: object
+  cosmonaut.tokenfactory.tokenfactory.MsgUpdateOwnerResponse:
     type: object
   cosmonaut.tokenfactory.tokenfactory.Params:
     type: object
